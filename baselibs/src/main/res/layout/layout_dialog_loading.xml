@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_dialog_loading_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="14dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="14dp">
+
+        <ImageView
+            android:id="@+id/dg_img_success"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/dg_img_success"
+            android:visibility="visible"/>
+
+        <ProgressBar
+            android:id="@+id/dg_pb_loading"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:indeterminateBehavior="cycle"
+            android:indeterminateDrawable="@drawable/progress_img_bg"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_dialog_loading_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            tools:text="处理中" />
+    </LinearLayout>
+
+</LinearLayout>
