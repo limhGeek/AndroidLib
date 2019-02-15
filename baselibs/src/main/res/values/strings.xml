@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BaseLibs</string>
+    <string name="app_name">qrcode</string>
     <string name="txt_comm_cancel">取消</string>
     <string name="txt_comm_yes">确定</string>
 </resources>
