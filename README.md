@@ -28,12 +28,12 @@ Android通用工具类、基类
 ### 生成二维码
 
 ```
-        btn4.setOnClickListener {
-            //中心的图标
-            val logo = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-            //生成二维码
-            val bitmap: Bitmap = CodeUtils.createImage(txt.text.toString(), 200, 200, logo)
-            //显示
-            img.setImageBitmap(bitmap)
-        }
+    btn4.setOnClickListener {
+        //中心的图标
+        val logo = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+        //生成二维码
+        val bitmap: Bitmap = CodeUtils.createImage(txt.text.toString(), 200, 200, logo)
+        //显示
+        img.setImageBitmap(bitmap)
+    }
 ```
