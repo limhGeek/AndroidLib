@@ -1,6 +1,7 @@
 package com.limh.baselibs.utils
 
 import android.util.Log
+import com.limh.baselibs.BuildConfig
 
 /**
  * @author limh
@@ -8,12 +9,7 @@ import android.util.Log
  * @date 2019/2/15 10:51
  */
 object Logs {
-    var isDebug = true
-
-    fun setIsDebug(isDebug: Boolean) {
-        Logs.isDebug = isDebug
-    }
-
+    var isDebug = BuildConfig.DEBUG
     /**
      *
      * @param tag
