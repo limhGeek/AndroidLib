@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.limh.calendar.adapter.CommAdapter;
 import com.limh.calendar.bean.DayDesc;
 import com.limh.calendar.popwindow.CommPopwindow;
@@ -19,9 +21,10 @@ import java.util.ArrayList;
  */
 public class PopCalendar {
     private CommPopwindow commPopwindow;
+    private int selectPosition = -1;
 
     public PopCalendar(final Context context) {
-        final ArrayList<DayDesc> days = Utils.INSTANCE.getMonths(2019,4);
+        final ArrayList<DayDesc> days = Utils.INSTANCE.getMonths();
 
         commPopwindow = new CommPopwindow.Builder(context)
                 .setView(R.layout.layout_pop_calendar)
@@ -31,23 +34,42 @@ public class PopCalendar {
                     @Override
                     public void getChildView(View view, int layoutResId) {
                         TextView yearMonth = view.findViewById(R.id.txt_pop_yearmonth);
-                        yearMonth.setText(Utils.INSTANCE.getDisplay(2018,2));
+                        yearMonth.setText(Utils.INSTANCE.getDisplay(-1,-1));
                         GridView gridView = view.findViewById(R.id.grid_view);
-                        gridView.setAdapter(new CommAdapter<DayDesc>(days, R.layout.layout_item_calendar) {
+                        final CommAdapter<DayDesc> adapter = new CommAdapter<DayDesc>(days, R.layout.layout_item_calendar) {
                             @Override
-                            public void bindView(ViewHolder holder, DayDesc obj) {
+                            public void bindView(ViewHolder holder, DayDesc obj, int position) {
                                 TextView dayView = holder.getView(R.id.txt_item_day);
                                 ViewGroup.LayoutParams params = dayView.getLayoutParams();
                                 params.width = Utils.INSTANCE.getScreenWidth(context) / 7;
                                 params.height = Utils.INSTANCE.getScreenWidth(context) / 7;
                                 dayView.setLayoutParams(params);
-                                if (obj.getThisMonth()){
-                                    holder.setTextColor(R.id.txt_item_day,R.color.colorTxt1);
-                                }else {
-                                    holder.setTextColor(R.id.txt_item_day,R.color.colorLine);
+                                if (obj.getThisMonth()) {
+                                    if (obj.getCheck()) {
+                                        holder.setTextColor(R.id.txt_item_day, R.color.colorBlue);
+                                    } else {
+                                        holder.setTextColor(R.id.txt_item_day, R.color.colorTxt1);
+                                    }
+                                } else {
+                                    holder.setTextColor(R.id.txt_item_day, R.color.colorLine);
                                 }
-                                holder.setText(R.id.txt_item_day, ""+obj.getDay());
+                                holder.setText(R.id.txt_item_day, "" + obj.getDay());
 
+                            }
+                        };
+                        gridView.setAdapter(adapter);
+                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Toast.makeText(context, Utils.INSTANCE.getDisplay(days.get(position).getYear(), days.get(position).getMonth()) + "" + days.get(position).getDay(), Toast.LENGTH_SHORT).show();
+                                if (days.get(position).getThisMonth()) {
+                                    if (selectPosition != -1) {
+                                        days.get(selectPosition).setCheck(false);
+                                    }
+                                    days.get(position).setCheck(true);
+                                    adapter.notifyDataSetChanged();
+                                    selectPosition = position;
+                                }
                             }
                         });
                     }
