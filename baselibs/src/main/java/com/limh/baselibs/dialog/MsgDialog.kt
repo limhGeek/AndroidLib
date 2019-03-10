@@ -1,4 +1,4 @@
-package com.limh.baselibs
+package com.limh.baselibs.dialog
 
 import android.app.Dialog
 import android.content.Context
