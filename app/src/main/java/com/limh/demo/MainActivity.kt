@@ -4,37 +4,29 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import com.limh.baselibs.dialog.MsgDialog
 import com.limh.baselibs.utils.Logs
+import com.limh.baselibs.utils.ScreenUtils
+import com.limh.calendar.PopCalendar
 import com.limh.qrcode.activity.CaptureActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-import android.graphics.Bitmap
-import android.os.Build
-import android.support.v4.content.FileProvider
-import com.limh.baselibs.popwindow.CommPopwindow
-import com.limh.baselibs.utils.ScreenUtils
-import com.squareup.picasso.Picasso
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.PopupWindow
-import android.widget.Toast
-import com.limh.baselibs.utils.CommUtils
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var context: Context
     private val TAG = "MainActivity"
     private var imageUri: Uri? = null
-    private var popwindow: CommPopwindow? = null
+//    private var popwindow: CommPopwindow? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,25 +37,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         btn1.setOnClickListener {
-            val upView = LayoutInflater.from(this).inflate(R.layout.layout_pop_calendar, null)
-            //测量View的宽高
-            CommUtils.measureWidthAndHeight(upView)
-            popwindow = CommPopwindow.Builder(context)
-                .setView(R.layout.layout_pop_calendar)
-                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, upView.measuredHeight)
-
-                .setViewOnclickListener(object :CommPopwindow.ViewInterface{
-                    override fun onDismiss() {
-                        Toast.makeText(context,"关闭",Toast.LENGTH_SHORT).show()
-                    }
-
-                    override fun getChildView(view: View?, layoutResId: Int) {
-                        view?.findViewById<Button>(R.id.btn_pop_yes)?.setOnClickListener { popwindow?.dismiss() }
-                    }
-                })
-                .setBackGroundLevel(0.5f)
-                .create()
-            popwindow?.showAtLocation(it, Gravity.BOTTOM, 0, 0)
+            val calendar = PopCalendar(context)
+            calendar.show(it)
+//            val upView = LayoutInflater.from(this).inflate(R.layout.layout_pop_calendar, null)
+//            //测量View的宽高
+//            CommUtils.measureWidthAndHeight(upView)
+//            popwindow = CommPopwindow.Builder(context)
+//                .setView(R.layout.layout_pop_calendar)
+//                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, upView.measuredHeight)
+//
+//                .setViewOnclickListener(object :CommPopwindow.ViewInterface{
+//                    override fun onDismiss() {
+//                        Toast.makeText(context,"关闭",Toast.LENGTH_SHORT).show()
+//                    }
+//
+//                    override fun getChildView(view: View?, layoutResId: Int) {
+//                        view?.findViewById<Button>(R.id.btn_pop_yes)?.setOnClickListener { popwindow?.dismiss() }
+//                    }
+//                })
+//                .setBackGroundLevel(0.5f)
+//                .create()
+//            popwindow?.showAtLocation(it, Gravity.BOTTOM, 0, 0)
         }
 
         btn2.setOnClickListener {

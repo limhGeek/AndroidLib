@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baselibs" />
+            <option value="$PROJECT_DIR$/calendar" />
             <option value="$PROJECT_DIR$/qrcode" />
           </set>
         </option>

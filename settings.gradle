@@ -1,1 +1,1 @@
-include ':app', ':baselibs', ':qrcode'
+include ':app', ':baselibs', ':qrcode', ':calendar'
