@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="pop_anim" parent="android:Animation">
+		<item name="android:windowEnterAnimation">@anim/pop_enter_anim</item>
+		<item name="android:windowExitAnimation">@anim/pop_exit_anim</item>
+	</style>
+
+	<style name="txt_item_style">
+		<item name="android:textSize">18sp</item>
+		<item name="android:textColor">#999999</item>
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:gravity">center</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+</resources>

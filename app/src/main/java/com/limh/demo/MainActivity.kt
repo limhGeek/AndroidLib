@@ -12,6 +12,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.limh.baselibs.dialog.MsgDialog
 import com.limh.baselibs.utils.Logs
 import com.limh.baselibs.utils.ScreenUtils
@@ -38,26 +39,11 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         btn1.setOnClickListener {
             val calendar = PopCalendar(context)
+                .setSelectColor(R.color.colorAccent)
+                .setOnResultListener { year, month, day ->
+                    Toast.makeText(context, "$year-$month-$day", Toast.LENGTH_SHORT).show()
+                }
             calendar.show(it)
-//            val upView = LayoutInflater.from(this).inflate(R.layout.layout_pop_calendar, null)
-//            //测量View的宽高
-//            CommUtils.measureWidthAndHeight(upView)
-//            popwindow = CommPopwindow.Builder(context)
-//                .setView(R.layout.layout_pop_calendar)
-//                .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, upView.measuredHeight)
-//
-//                .setViewOnclickListener(object :CommPopwindow.ViewInterface{
-//                    override fun onDismiss() {
-//                        Toast.makeText(context,"关闭",Toast.LENGTH_SHORT).show()
-//                    }
-//
-//                    override fun getChildView(view: View?, layoutResId: Int) {
-//                        view?.findViewById<Button>(R.id.btn_pop_yes)?.setOnClickListener { popwindow?.dismiss() }
-//                    }
-//                })
-//                .setBackGroundLevel(0.5f)
-//                .create()
-//            popwindow?.showAtLocation(it, Gravity.BOTTOM, 0, 0)
         }
 
         btn2.setOnClickListener {
@@ -122,8 +108,8 @@ class MainActivity : AppCompatActivity() {
         } else if (requestCode == 100) {
             if (resultCode == Activity.RESULT_OK) {
                 Logs.d(TAG, "结果回调：${data?.extras?.toString()}")
-                Picasso.with(context)
-                    .load(imageUri).skipMemoryCache()
+                Picasso.get()
+                    .load(imageUri)
                     .into(img)
             }
         }

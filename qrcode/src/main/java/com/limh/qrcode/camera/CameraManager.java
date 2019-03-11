@@ -212,7 +212,7 @@ public final class CameraManager {
     public Rect getFramingRect() {
         try {
             Point screenResolution = configManager.getScreenResolution();
-            // if (framingRect == null) {
+
             if (camera == null) {
                 return null;
             }
@@ -226,7 +226,7 @@ public final class CameraManager {
                 topOffset = (screenResolution.y - FRAME_HEIGHT) / 2;
             }
             framingRect = new Rect(leftOffset, topOffset, leftOffset + FRAME_WIDTH, topOffset + FRAME_HEIGHT);
-            // }
+
             return framingRect;
         } catch (Exception e) {
             e.printStackTrace();

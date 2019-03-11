@@ -24,8 +24,6 @@ public class CommPopwindow extends PopupWindow {
 
     public interface ViewInterface {
         void getChildView(View view, int layoutResId);
-
-        void onDismiss();
     }
 
     private CommPopwindow(Context context) {
@@ -128,12 +126,6 @@ public class CommPopwindow extends PopupWindow {
             params.apply(popupWindow.controller);
             if (listener != null && params.layoutResId != 0) {
                 listener.getChildView(popupWindow.controller.mPopupView, params.layoutResId);
-                popupWindow.setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        listener.onDismiss();
-                    }
-                });
             }
             measureWidthAndHeight(popupWindow.controller.mPopupView);
             return popupWindow;
