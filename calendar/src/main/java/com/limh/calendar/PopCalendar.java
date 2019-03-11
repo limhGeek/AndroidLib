@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+
 import com.limh.calendar.adapter.CommAdapter;
 import com.limh.calendar.bean.DayDesc;
 import com.limh.calendar.popwindow.CommPopwindow;
@@ -29,6 +30,8 @@ public class PopCalendar {
     private int selectColor = -1;
     //点击确定自动关闭
     private boolean autoClose = true;
+    private boolean outCancel = true;
+    private boolean clickBack = false;
 
     private CommPopwindow commPopwindow;
     private int selectPosition = -1;
@@ -55,16 +58,38 @@ public class PopCalendar {
         return this;
     }
 
+    public PopCalendar setDefault(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        return this;
+    }
+
+    public PopCalendar setOutCancel(boolean outCancel) {
+        this.outCancel = outCancel;
+        return this;
+    }
+
+    public PopCalendar setClickBack(boolean clickBack) {
+        this.clickBack = clickBack;
+        return this;
+    }
+
     public PopCalendar(final Context context) {
         Calendar c = Calendar.getInstance();
         currentYear = c.get(Calendar.YEAR);
         currentMonth = c.get(Calendar.MONTH) + 1;
         days.clear();
         days.addAll(Utils.getMonths(currentYear, currentMonth));
+        for (DayDesc item : days) {
+            if (year == item.getYear() && month == item.getMonth() && day == item.getDay()) {
+                item.setCheck(true);
+            }
+        }
         commPopwindow = new CommPopwindow.Builder(context)
                 .setView(R.layout.layout_pop_calendar)
                 .setAnimationStyle(R.style.pop_anim)
-                .setBackGroundLevel(0.5f)
+                .setOutsideTouchable(outCancel)
                 .setWidthAndHeight(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setViewOnclickListener(new CommPopwindow.ViewInterface() {
                     @Override
@@ -106,6 +131,9 @@ public class PopCalendar {
                                     year = days.get(position).getYear();
                                     month = days.get(position).getMonth();
                                     day = days.get(position).getDay();
+                                    if (null != onResultListener && selectPosition != -1 && clickBack) {
+                                        onResultListener.onResult(year, month, day);
+                                    }
                                 }
                             }
                         });
@@ -113,8 +141,15 @@ public class PopCalendar {
                         view.findViewById(R.id.btn_pop_cancel).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if (selectPosition != -1) {
+                                    days.get(selectPosition).setCheck(false);
+                                }
                                 selectPosition = -1;
-                                dismiss();
+                                setDefault(-1, -1, -1);
+                                adapter.notifyDataSetChanged();
+                                if (null != onResultListener) {
+                                    onResultListener.onCancel();
+                                }
                             }
                         });
                         //确定按钮
@@ -194,6 +229,8 @@ public class PopCalendar {
 
     public interface OnResultListener {
         void onResult(int year, int month, int day);
+
+        void onCancel();
     }
 
     public void show(View view) {
