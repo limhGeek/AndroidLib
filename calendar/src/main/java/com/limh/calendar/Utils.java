@@ -81,16 +81,18 @@ public class Utils {
 
         int firstDay = getFristDay(year, month);
         int lastMonthDays = getTotalDay(year, month - 1);
-        for (int i = firstDay; i > 1; i--) {
+        for (int i = firstDay - 1; i >= 1; i--) {
             list.add(new DayDesc(false, lastMonthDays - i + 1, month - 1, false, year));
         }
         int totalDay = getTotalDay(year, month);
-        for (int i = 1; i < totalDay; i++) {
+        for (int i = 1; i <= totalDay; i++) {
             list.add(new DayDesc(false, i, month, true, year));
         }
         if (list.size() < 42) {
-            for (int i = 1; i < (42 - list.size()); i++)
-                list.add(new DayDesc(false, i, month + 1, false, year));
+            int count = 42-list.size();
+            for (int i = 0; i < count; i++) {
+                list.add(new DayDesc(false, (i + 1), month + 1, false, year));
+            }
         }
         return list;
     }
@@ -100,19 +102,20 @@ public class Utils {
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH) + 1;
         ArrayList<DayDesc> list = new ArrayList<>();
-
         int firstDay = getFristDay(year, month);
         int lastMonthDays = getTotalDay(year, month - 1);
-        for (int i = firstDay; i > 1; i--) {
+        for (int i = firstDay - 1; i >= 1; i--) {
             list.add(new DayDesc(false, lastMonthDays - i + 1, month - 1, false, year));
         }
         int totalDay = getTotalDay(year, month);
-        for (int i = 1; i < totalDay; i++) {
+        for (int i = 1; i <= totalDay; i++) {
             list.add(new DayDesc(false, i, month, true, year));
         }
         if (list.size() < 42) {
-            for (int i = 1; i < (42 - list.size()); i++)
-                list.add(new DayDesc(false, i, month + 1, false, year));
+            int count = 42-list.size();
+            for (int i = 0; i < count; i++) {
+                list.add(new DayDesc(false, (i + 1), month + 1, false, year));
+            }
         }
         return list;
     }

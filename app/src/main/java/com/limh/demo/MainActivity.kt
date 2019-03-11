@@ -12,7 +12,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.limh.baselibs.dialog.MsgDialog
 import com.limh.baselibs.utils.Logs
 import com.limh.baselibs.utils.ScreenUtils
@@ -40,9 +39,15 @@ class MainActivity : AppCompatActivity() {
         btn1.setOnClickListener {
             val calendar = PopCalendar(context)
                 .setSelectColor(R.color.colorAccent)
-                .setOnResultListener { year, month, day ->
-                    Toast.makeText(context, "$year-$month-$day", Toast.LENGTH_SHORT).show()
-                }
+                .setOnResultListener(object :PopCalendar.OnResultListener {
+                    override fun onResult(year: Int, month: Int, day: Int) {
+
+                    }
+
+                    override fun onCancel() {
+
+                    }
+                })
             calendar.show(it)
         }
 
