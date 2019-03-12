@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
  */
 public class CommPopwindow extends PopupWindow {
     final PopupController controller;
+    private static float bg_level=0.5f;
 
     @Override
     public int getWidth() {
@@ -35,6 +36,31 @@ public class CommPopwindow extends PopupWindow {
         super.dismiss();
         controller.setBackGroundLevel(1.0f);
     }
+
+    @Override
+    public void showAtLocation(View parent, int gravity, int x, int y) {
+        super.showAtLocation(parent, gravity, x, y);
+        controller.setBackGroundLevel(bg_level);
+    }
+
+    @Override
+    public void showAsDropDown(View anchor) {
+        super.showAsDropDown(anchor);
+        controller.setBackGroundLevel(0.5f);
+    }
+
+    @Override
+    public void showAsDropDown(View anchor, int xoff, int yoff) {
+        super.showAsDropDown(anchor, xoff, yoff);
+        controller.setBackGroundLevel(bg_level);
+    }
+
+    @Override
+    public void showAsDropDown(View anchor, int xoff, int yoff, int gravity) {
+        super.showAsDropDown(anchor, xoff, yoff, gravity);
+        controller.setBackGroundLevel(bg_level);
+    }
+
 
     public static class Builder {
         private final PopupController.PopupParams params;
@@ -96,6 +122,7 @@ public class CommPopwindow extends PopupWindow {
         public Builder setBackGroundLevel(float level) {
             params.isShowBg = true;
             params.bg_level = level;
+            bg_level = level;
             return this;
         }
 

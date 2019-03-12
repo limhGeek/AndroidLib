@@ -72,6 +72,7 @@ public class PopupController {
         mWindow = ((Activity) context).getWindow();
         WindowManager.LayoutParams params = mWindow.getAttributes();
         params.alpha = level;
+        mWindow.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         mWindow.setAttributes(params);
     }
 
