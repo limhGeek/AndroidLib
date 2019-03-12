@@ -1,6 +1,7 @@
 package com.limh.calendar;
 
 
+import android.content.Context;
 import com.limh.calendar.bean.DayDesc;
 
 import java.text.SimpleDateFormat;
@@ -118,5 +119,10 @@ public class Utils {
             }
         }
         return list;
+    }
+
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
     }
 }

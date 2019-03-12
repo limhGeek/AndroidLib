@@ -101,6 +101,9 @@ public class PopCalendar {
                             @Override
                             public void bindView(ViewHolder holder, DayDesc obj, int position) {
                                 TextView txtDay = holder.getView(R.id.txt_item_day);
+                                ViewGroup.LayoutParams lp = txtDay.getLayoutParams();
+                                lp.height = Utils.dip2px(context,40);
+                                txtDay.setLayoutParams(lp);
                                 if (obj.getThisMonth()) {
                                     if (obj.isCheck()) {
                                         if (-1 != selectColor) {
